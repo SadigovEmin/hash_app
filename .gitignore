@@ -1,0 +1,14 @@
+# Buckets I want each user create their own buckets rather than pulling from repo 
+*.txt
+
+# Compiled Java files
+*.class
+bin/
+
+# Eclipse files
+.settings/
+.metadata/
+
+# Operating system files
+.DS_Store
+Thumbs.db
