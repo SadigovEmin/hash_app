@@ -15,7 +15,7 @@ public class HashBucketManager {
 	public void createBucketFiles() {
 		
 		for (int i = 1; i <= numberOfBuckets; i++) {
-			File file = new File("bucket" + i + ".txt"); //java object. 
+			File file = new File(i + ".txt"); //java object. 
 			
 			try {
 				if(file.createNewFile()) {
@@ -26,6 +26,19 @@ public class HashBucketManager {
 			}catch(IOException e) {
 				System.out.println(e.getMessage() + " File name: " + file.getName());
 			}
+			
+		}
+	}
+	
+	public void addString(String text) {
+		int bucketIndex = MurmurHash.getBucketIndex(text, numberOfBuckets);
+		int fileNumber  = bucketIndex + 1;
+		File file = new File(fileNumber + ".txt");
+		try {
+			java.nio.file.Files.writeString(file.toPath(), text, java.nio.file.StandardOpenOption.APPEND);
+			System.out.println(text + " is successfully added to " + fileNumber + ".txt");
+		}catch(IOException e) {
+			System.out.println("Error while writing to " + fileNumber + ".txt " + e.getMessage());
 			
 		}
 	}

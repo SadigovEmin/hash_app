@@ -56,11 +56,22 @@ public class Main {
         }
 
         System.out.println("The number of hash buckets: " + n + ", Bucket size: " + s);
-
-        in.close();
         
         HashBucketManager hashBucketManager = new HashBucketManager(n,s);
         hashBucketManager.createBucketFiles();
+        
+        while (true) {
+        	System.out.println("Please enter the string: ");
+        	
+        	String text = in.nextLine();
+        	
+        	if(text.isEmpty()) {
+        		continue;
+        	}
+        	
+        	hashBucketManager.addString(text);
+        	System.out.println();
+        }
         
         
     }
