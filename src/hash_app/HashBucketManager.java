@@ -31,15 +31,40 @@ public class HashBucketManager {
 	}
 	
 	public void addString(String text) {
+		if (text.length() > bucketSize) {
+		    System.out.println("String exceeds bucket capacity.");
+		    return;
+		}
 		int bucketIndex = MurmurHash.getBucketIndex(text, numberOfBuckets);
 		int fileNumber  = bucketIndex + 1;
 		File file = new File(fileNumber + ".txt");
+		while (getFileSize(file) + text.length() > bucketSize) {
+			int overflowNum = 1;
+			
+			File overflowFile = new File(fileNumber + "_overflow_" + overflowNum + ".txt");
+			while(overflowFile.exists() && getFileSize(overflowFile) + text.length() > bucketSize) {
+				overflowNum++;
+				overflowFile = new File(fileNumber + "_overflow_" + overflowNum + ".txt");
+			}
+			file = overflowFile;
+		}
 		try {
-			java.nio.file.Files.writeString(file.toPath(), text, java.nio.file.StandardOpenOption.APPEND);
+			java.nio.file.Files.writeString(file.toPath(), text, java.nio.file.StandardOpenOption.CREATE, java.nio.file.StandardOpenOption.APPEND);
 			System.out.println(text + " is successfully added to " + fileNumber + ".txt");
 		}catch(IOException e) {
 			System.out.println("Error while writing to " + fileNumber + ".txt " + e.getMessage());
 			
+		}
+	}
+	
+	private int getFileSize(File file) {
+		try {
+			String content = java.nio.file.Files.readString(file.toPath());
+			return content.length();
+			
+		}catch(IOException e) {
+			System.out.println("Error while reading file: " + e.getMessage());
+			return 0;
 		}
 	}
 }
