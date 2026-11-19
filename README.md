@@ -73,7 +73,7 @@ The program accepts two arguments:
 - `s` – maximum capacity of each bucket in characters
 
 Example:
-
+ +
 	In order to compile java classes run:
 
 	javac -cp "lib/guava-33.4.8-jre.jar" -d bin src\hash_app\*.java
@@ -107,7 +107,7 @@ The corresponding reference file is:
 
     2_reference.txt
 
-## Dependencies
+## Dependencies/Library 
 
 The project uses the Guava library for the MurmurHash3 implementation.
 
